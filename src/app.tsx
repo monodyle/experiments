@@ -1,11 +1,14 @@
 import './app.css'
+import { BrowserRouter } from 'react-router-dom'
 import Layout from './layout'
-import ScrambleTextExample from './labs/scramble-text'
+import Routers from './routes'
 
 export default function App() {
   return (
-    <Layout className="flex">
-      <ScrambleTextExample />
-    </Layout>
+    <BrowserRouter>
+      <Layout className="flex">
+        <Routers />
+      </Layout>
+    </BrowserRouter>
   )
 }

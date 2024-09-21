@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react'
+import Button from '../ui/button'
 
 const chars =
   '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*+-./:;<=>?[]{}()'
@@ -44,21 +45,17 @@ function ScrambleText({
   )
 }
 
-const text = 'HYPER TEXT EFFECT'
+const text = 'HYPER SCRAMBLE TEXT EFFECT'
 export default function ScrambleTextExample() {
   const [state, reload] = useReducer((prev) => prev + 1, 0)
 
   return (
-    <div className="w-full max-w-xl m-auto space-y-4">
-      <ScrambleText className="font-mono text-4xl font-bold" key={state}>{text}</ScrambleText>
+    <div className="m-auto space-y-4">
+      <ScrambleText className="font-mono text-3xl font-bold" key={state}>
+        {text}
+      </ScrambleText>
       <div>
-        <button
-          type="button"
-          className="px-2 py-1 text-sm font-medium rounded bg-zinc-200 hover:bg-zinc-300"
-          onClick={() => reload()}
-        >
-          start over
-        </button>
+        <Button onPress={() => reload()} className='text-sm'>RESET</Button>
       </div>
     </div>
   )
