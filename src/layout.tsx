@@ -21,7 +21,7 @@ export default function Layout({
       <div className="border-b border-zinc-300" />
       <div />
       <footer className="flex border-x border-zinc-300">
-        <span className="m-auto text-sm text-zinc-500">
+        <span className="m-auto text-sm font-medium text-zinc-500">
           <a
             href="https://github.com/monodyle/experiments"
             target="_blank"

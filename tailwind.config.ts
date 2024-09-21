@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Work Sans', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
         mono: ['Space Mono', 'monospace']
       },
     },
