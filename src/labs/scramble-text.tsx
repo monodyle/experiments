@@ -3,7 +3,7 @@ import { useEffect, useReducer, useRef } from 'react'
 const chars =
   '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*+-./:;<=>?[]{}()'
 
-function Hyperplexed({
+function ScrambleText({
   children,
   ...props
 }: { children: string } & React.HTMLAttributes<HTMLSpanElement>) {
@@ -44,13 +44,13 @@ function Hyperplexed({
   )
 }
 
-const text = 'hyperplexed'
-export default function HyperplexedExample() {
+const text = 'HYPER TEXT EFFECT'
+export default function ScrambleTextExample() {
   const [state, reload] = useReducer((prev) => prev + 1, 0)
 
   return (
     <div className="w-full max-w-xl m-auto space-y-4">
-      <Hyperplexed className="font-mono text-4xl font-bold" key={state}>{text}</Hyperplexed>
+      <ScrambleText className="font-mono text-4xl font-bold" key={state}>{text}</ScrambleText>
       <div>
         <button
           type="button"

@@ -1,11 +1,11 @@
 import './app.css'
-import Hyperplexed from './labs/hyperplexed'
 import Layout from './layout'
+import ScrambleTextExample from './labs/scramble-text'
 
 export default function App() {
   return (
     <Layout className="flex">
-      <Hyperplexed />
+      <ScrambleTextExample />
     </Layout>
   )
 }
