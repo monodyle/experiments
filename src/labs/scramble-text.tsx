@@ -71,8 +71,6 @@ function ScrambleText({
       'ScrambleText component must receive at least one `children` or `content` property',
     )
 
-  console.debug('letterRandomizationDuration', letterRandomizationDuration)
-
   return (
     <span ref={ref} {...props}>
       {text}
@@ -93,55 +91,85 @@ function Debug({
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData)
-    console.debug(data)
 
-    setConfig((original) => {
-      if (data.content) {
-        original.content = data.content.toString()
-      }
-      if (data.speed) {
-        original.letterRandomizationDuration = 100 / Number(data.speed)
-      }
+    const newConfig: ScrambleTextProps = {}
+    if (data.content) {
+      newConfig.content = data.content.toString()
+    }
+    if (data.speed) {
+      newConfig.letterRandomizationDuration = 100 / Number(data.speed)
+    }
+    if (data.fontFamily) {
+      newConfig.className =
+        data.fontFamily.toString() === 'mono' ? 'font-mono' : 'font-sans'
+    }
 
-      return original
-    })
+    setConfig((original) => ({ ...original, ...newConfig }))
     dispatch()
   }
 
   return (
-    <Form className="space-y-2" onSubmit={onSubmit}>
-      <TextField
-        type="text"
-        name="content"
-        defaultValue={config.children || config.content || example}
-      >
-        <Label className="text-xs font-semibold uppercase">Content</Label>
-        <Input className="w-full text-sm py-2 px-4 bg-zinc-100 font-sans border border-zinc-900" />
-      </TextField>
-      <RadioGroup className="flex items-center gap-2" name="speed">
-        <Label className="text-xs font-semibold uppercase">Speed</Label>
-        <Radio
-          value="0.2"
-          className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+    <Form className="border" onSubmit={onSubmit}>
+      <div className="flex items-center border-b">
+        <span className='text-xs font-semibold uppercase pl-4'>Debug Tool</span>
+        <Button type="submit" className="text-xs uppercase ml-auto">
+          Run
+        </Button>
+      </div>
+      <div className="space-y-2 p-4">
+        <TextField
+          type="text"
+          name="content"
+          defaultValue={config.children || config.content || example}
         >
-          x0.2
-        </Radio>
-        <Radio
-          value="0.5"
-          className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+          <Label className="text-xs font-semibold uppercase">Content</Label>
+          <Input className="w-full text-sm py-1 px-2 bg-zinc-100 font-sans border border-zinc-200" />
+        </TextField>
+        <RadioGroup
+          name="speed"
+          defaultValue="1"
+          className="flex items-center gap-2"
         >
-          x0.5
-        </Radio>
-        <Radio
-          value="1"
-          className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+          <Label className="text-xs font-semibold uppercase">Speed</Label>
+          <Radio
+            value="0.2"
+            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+          >
+            x0.2
+          </Radio>
+          <Radio
+            value="0.5"
+            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+          >
+            x0.5
+          </Radio>
+          <Radio
+            value="1"
+            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+          >
+            x1
+          </Radio>
+        </RadioGroup>
+        <RadioGroup
+          name="fontFamily"
+          defaultValue="mono"
+          className="flex items-center gap-2"
         >
-          x1
-        </Radio>
-      </RadioGroup>
-      <Button type="submit" className="text-sm uppercase ml-auto">
-        Update
-      </Button>
+          <Label className="text-xs font-semibold uppercase">Font</Label>
+          <Radio
+            value="sans"
+            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+          >
+            Sans Serif
+          </Radio>
+          <Radio
+            value="mono"
+            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+          >
+            Monospace
+          </Radio>
+        </RadioGroup>
+      </div>
     </Form>
   )
 }
@@ -153,8 +181,11 @@ export default function ScrambleTextExample() {
   return (
     <div className="m-auto space-y-4 w-full max-w-lg">
       <ScrambleText
-        className="font-mono text-3xl font-bold break-all"
         {...config}
+        className={[
+          'text-3xl font-bold break-all',
+          config.className || 'font-mono',
+        ].join(' ')}
         key={key}
       />
       <Debug config={config} setConfig={setConfig} dispatch={update} />
