@@ -1,23 +1,28 @@
+import { useLocation } from 'react-router-dom'
 import { routes } from './routes'
 import Link from './ui/link'
 
 function Header() {
+  const { pathname } = useLocation()
+
   return (
     <>
       <div className="border-b border-zinc-300" />
       <header className="border-b border-x border-zinc-300">
-        <nav className="size-full flex items-center justify-center gap-4 text-sm font-medium text-zinc-300">
+        <nav className="size-full flex items-center justify-center gap-4 text-sm font-medium text-zinc-300 select-none">
           <Link
             href="https://minhle.space"
             target="_blank"
             rel="noreferrer noopener"
+            className="text-zinc-500 hover:text-zinc-700"
           >
             Space
           </Link>
           ⟡
           <Link
             href={routes.scramble_text.path}
-            className="text-zinc-500 hover:text-zinc-700"
+            className="text-zinc-500 hover:text-zinc-700 data-[active]:text-zinc-700"
+            data-active={pathname === routes.scramble_text.path}
           >
             {routes.scramble_text.label}
           </Link>
