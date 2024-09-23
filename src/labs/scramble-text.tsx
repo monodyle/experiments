@@ -179,7 +179,7 @@ export default function ScrambleTextExample() {
   const [key, update] = useReducer(() => Date.now(), Date.now())
 
   return (
-    <div className="m-auto space-y-4 w-full max-w-lg">
+    <div className="m-auto space-y-4 w-full max-w-lg animate-in fade-in-0 duration-200">
       <ScrambleText
         {...config}
         className={[

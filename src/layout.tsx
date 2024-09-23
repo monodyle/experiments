@@ -1,6 +1,9 @@
 import { useLocation } from 'react-router-dom'
 import { routes } from './routes'
 import Link from './ui/link'
+import { Fragment } from 'react/jsx-runtime'
+
+const links = [routes.scramble_text, routes.wip]
 
 function Header() {
   const { pathname } = useLocation()
@@ -18,14 +21,18 @@ function Header() {
           >
             Space
           </Link>
-          ⟡
-          <Link
-            href={routes.scramble_text.path}
-            className="text-zinc-500 hover:text-zinc-700 data-[active]:text-zinc-700"
-            data-active={pathname === routes.scramble_text.path}
-          >
-            {routes.scramble_text.label}
-          </Link>
+          {links.map((link) => (
+            <Fragment key={link.path}>
+              ⟡
+              <Link
+                href={link.path}
+                className="text-zinc-500 hover:text-zinc-700 data-[active='true']:text-zinc-700"
+                data-active={pathname === link.path}
+              >
+                {link.label}
+              </Link>
+            </Fragment>
+          ))}
         </nav>
       </header>
       <div className="border-b border-zinc-300" />
