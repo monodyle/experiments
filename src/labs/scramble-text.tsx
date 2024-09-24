@@ -9,6 +9,7 @@ import {
 } from 'react-aria-components'
 import { useEffect, useReducer, useRef, useState } from 'react'
 import Button from '../ui/button'
+import Heading from '../ui/heading'
 
 const example = 'HYPER SCRAMBLE TEXT EFFECT'
 const chars =
@@ -35,7 +36,7 @@ function ScrambleText({
   letterRandomizationDuration = 100,
   ...props
 }: ScrambleTextProps) {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLElement>(null)
   const text = children || content
 
   useEffect(() => {
@@ -111,7 +112,7 @@ function Debug({
   return (
     <Form className="border" onSubmit={onSubmit}>
       <div className="flex items-center border-b">
-        <span className='text-xs font-semibold uppercase pl-4'>Debug Tool</span>
+        <span className="text-xs font-semibold uppercase pl-4">Debug Tool</span>
         <Button type="submit" className="text-xs uppercase ml-auto">
           Run
         </Button>
@@ -121,6 +122,7 @@ function Debug({
           type="text"
           name="content"
           defaultValue={config.children || config.content || example}
+          maxLength={128}
         >
           <Label className="text-xs font-semibold uppercase">Content</Label>
           <Input className="w-full text-sm py-1 px-2 bg-zinc-100 font-sans border border-zinc-200" />
@@ -133,19 +135,19 @@ function Debug({
           <Label className="text-xs font-semibold uppercase">Speed</Label>
           <Radio
             value="0.2"
-            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+            className="text-xs font-semibold px-2 py-1 border border-transparent data-[focused]:border-zinc-900 data-[selected]:bg-zinc-200 rounded"
           >
             x0.2
           </Radio>
           <Radio
             value="0.5"
-            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+            className="text-xs font-semibold px-2 py-1 border border-transparent data-[focused]:border-zinc-900 data-[selected]:bg-zinc-200 rounded"
           >
             x0.5
           </Radio>
           <Radio
             value="1"
-            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+            className="text-xs font-semibold px-2 py-1 border border-transparent data-[focused]:border-zinc-900 data-[selected]:bg-zinc-200 rounded"
           >
             x1
           </Radio>
@@ -158,13 +160,13 @@ function Debug({
           <Label className="text-xs font-semibold uppercase">Font</Label>
           <Radio
             value="sans"
-            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+            className="text-xs font-semibold px-2 py-1 border border-transparent data-[focused]:border-zinc-900 data-[selected]:bg-zinc-200 rounded"
           >
             Sans Serif
           </Radio>
           <Radio
             value="mono"
-            className="text-xs font-semibold px-2 py-1 data-[selected]:bg-zinc-200 rounded"
+            className="text-xs font-semibold px-2 py-1 border border-transparent data-[focused]:border-zinc-900 data-[selected]:bg-zinc-200 rounded"
           >
             Monospace
           </Radio>
@@ -179,15 +181,20 @@ export default function ScrambleTextExample() {
   const [key, update] = useReducer(() => Date.now(), Date.now())
 
   return (
-    <div className="m-auto space-y-4 w-full max-w-lg animate-in fade-in-0 duration-200">
-      <ScrambleText
-        {...config}
-        className={[
-          'text-3xl font-bold break-all',
-          config.className || 'font-mono',
-        ].join(' ')}
-        key={key}
-      />
+    <div className="m-auto space-y-4 w-full max-w-lg animate-in slide-in-from-bottom-4 fade-in-0 duration-200">
+      <div>
+        <Heading>Scramble Text</Heading>
+      </div>
+      <div>
+        <ScrambleText
+          {...config}
+          className={[
+            'text-3xl font-bold break-all',
+            config.className || 'font-mono',
+          ].join(' ')}
+          key={key}
+        />
+      </div>
       <Debug config={config} setConfig={setConfig} dispatch={update} />
     </div>
   )
